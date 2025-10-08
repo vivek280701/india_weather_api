@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: india-weather-api
+    env: python
+    buildCommand: "./venv/Scripts/python -m pip install -r requirements.txt && ./venv/Scripts/python manage.py collectstatic --noinput"
+    startCommand: "gunicorn weather_project.wsgi:application"
+    envVars:
+      - key: DEBUG
+        value: False
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
