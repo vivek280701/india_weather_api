@@ -1,7 +1,10 @@
 import os
 import requests
 from django.http import JsonResponse
+from django.shortcuts import render
 from dotenv import load_dotenv
+from django.http import HttpResponse
+
 
 # Load environment variables from .env
 load_dotenv()
@@ -40,3 +43,11 @@ def get_weather(request):
 
     return JsonResponse(result)
 # Django settings for weather_project project.
+
+def home(request):
+    return render(request, 'weather/index.html')
+
+
+def index(request):
+    return HttpResponse("Hello, Weather App is working!")
+# Create your views here.

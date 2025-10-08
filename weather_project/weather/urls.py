@@ -2,6 +2,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('weather/', views.get_weather, name='get_weather'),
+    path('', views.index, name='index'),         # homepage
+    path('api/', views.get_weather, name='api'), # api endpoint
 ]
-# Django settings for weather_project project.

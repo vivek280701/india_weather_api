@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>India Weather Forecast</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>🌤️ Live Weather in India</h1>
+        <form id="weather-form">
+            <select id="city" name="city">
+                <option value="Delhi">Delhi</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Bangalore">Bangalore</option>
+                <option value="Chennai">Chennai</option>
+                <option value="Kolkata">Kolkata</option>
+                <option value="Hyderabad">Hyderabad</option>
+            </select>
+            <button type="submit">Get Weather</button>
+        </form>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const form = document.getElementById('weather-form');
+        const resultDiv = document.getElementById('result');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const city = document.getElementById('city').value;
+
+            resultDiv.innerHTML = 'Fetching weather... 🌦️';
+
+            try {
+                const response = await fetch(`/api/weather/?city=${city}`);
+                const data = await response.json();
+                resultDiv.innerHTML = `
+                    <h2>${data.city}</h2>
+                    <p>🌡️ Temperature: ${data.temperature} °C</p>
+                    <p>💧 Humidity: ${data.humidity}%</p>
+                    <p>🌦️ Weather: ${data.weather}</p>
+                    <p>🌬️ Wind Speed: ${data.wind_speed} m/s</p>
+                    <p>🌧️ Rainfall: ${data.rainfall_mm_last_hour} mm</p>
+                    <p>☔ Monsoon: ${data.monsoon ? 'Yes' : 'No'}</p>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = '❌ Failed to fetch weather data.';
+            }
+        });
+    </script>
+</body>
+</html>
